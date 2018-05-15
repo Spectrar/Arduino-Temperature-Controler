@@ -1,4 +1,4 @@
-
+// credit to Miles Burton for the libraries in use
 #include <OneWire.h> 
 #include <DallasTemperature.h>
 
@@ -11,6 +11,7 @@ OneWire oneWire(ONE_WIRE_BUS);
 // tell Dallas Temperature to read pins
 DallasTemperature sensors(&oneWire);
 
+
 void setup(void) 
 { 
  // start serial port 
@@ -20,13 +21,14 @@ void setup(void)
 } 
 void loop(void) 
 { 
+  String temps;
  //get temperature readings 
  sensors.requestTemperatures();
 
- Serial.print("Temperature is:   1: "); 
- Serial.print(sensors.getTempFByIndex(0));
- Serial.print("     2: ");
- Serial.print(sensors.getTempFByIndex(1));
- Serial.println();
+for (int i=0; i <= sensors.getDeviceCount()-1; i++){
+  temps.concat((String)sensors.getTempFByIndex(i) + " ");
+}
+Serial.println(temps);
  delay(1000); 
 } 
+
